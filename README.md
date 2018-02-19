@@ -4,13 +4,10 @@ This is forked from [here](https://github.com/samliu/motd).
 
 ![screen shot](./screenshot.png)
 
-## Install
+## Usage
 
-Note: This is an opinionated install. You can achieve installation in other ways
-too e.g adding the script to `/etc/update-motd.d` which could be simpler.
-
-1. `cp ./dynmotd.sh /usr/local/bin/`
-2. Update your banner text.
-3. `chmod +x /usr/local/bin/dynmotd`
-4. `mv /usr/local/bin/dynmotd.sh /etc/update-motd.d/30-banner`
+1. `git clone https://github.com/ichiwa/motd.git`
+2. `chmod +x ./motd/dynmotd.sh`
+3. `mv ./motd/dynmotd.sh /etc/update-motd.d/30-banner`
+4. [Create AA](http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=DEV) and update your banner text.
 5. `update-motd --force`
