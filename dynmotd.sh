@@ -14,7 +14,6 @@ cyan=$(tput setaf 6)
 white=$(tput setaf 7)
 normal=$(tput sgr0)
 
-
 # for amazon linux
 printf "${cyan}
 
@@ -23,7 +22,7 @@ your banner is here
 ${normal}"
 
 # Print System info. I like to print when the server was rebuilt.
-printf "${yellow}This server was born on 6-28-2015 at 1:13AM PST${normal}\n"
+# printf "${yellow}This server was born on 6-28-2015 at 1:13AM PST${normal}\n"
 
 # Memory usage Information.
 MemFreeB=`cat /proc/meminfo | grep MemFree | awk {'print $2'}`
@@ -55,18 +54,18 @@ LightBlueScheme="\e[1;34m#####"
 LightCyanScheme="\e[1;36m#####"
 MaxLeftOverChars=35
 Hostname=`hostname`
-HostChars=$((${#NICKNAME} + 8))
+HostChars=$((${#Hostname} + 8))
 LeftoverChars=$((MaxLeftOverChars - HostCHars -10))
 PreHostScheme=$BlueScheme$BlueScheme$LightBlueScheme$LightBlueScheme
 HostScheme=`head -c $HostChars /dev/zero|tr '\0' '#'`
 PostHostScheme=`head -c $LeftoverChars /dev/zero|tr '\0' '#'`
 
-GlobalIp=$(/usr/bin/curl -sq http://169.254.169.254/latest/meta-data/public-ipv4)
+GlobalIp=$(/usr/bin/curl -sqf http://169.254.169.254/latest/meta-data/public-ipv4 || echo "None")
 
 # Output.
 echo -e "
 $PreHostScheme$LightBlueScheme\e[1;36m$HostScheme$LightBlueScheme\e[1;34m$PostHostScheme$BlueScheme
-$PreHostScheme$LightCyanScheme\e[1;36m### \e[1;32m$NICKNAME \e[1;36m###$LightCyanScheme\e[1;34m$PostHostScheme$BlueScheme
+$PreHostScheme$LightCyanScheme\e[1;36m### \e[1;32m$Hostname \e[1;36m###$LightCyanScheme\e[1;34m$PostHostScheme$BlueScheme
 $PreHostScheme$LightBlueScheme\e[1;36m$HostScheme$LightBlueScheme\e[1;34m$PostHostScheme$BlueScheme
 \e[0;34m##   \e[1;33mGlobal Ip \e[1;34m= \e[0;32m${GlobalIp}
 \e[0;34m##     \e[1;33mRelease \e[1;34m= \e[0;32m`cat /etc/*release | grep PRETTY_NAME | awk -F = '{ print $2 }'`
@@ -80,5 +79,4 @@ $PreHostScheme$LightBlueScheme\e[1;36m$HostScheme$LightBlueScheme\e[1;34m$PostHo
 \e[0;34m##    \e[1;33mSessions \e[1;34m= \e[0;32m`who | grep -v whoami | wc -l` sessions
 \e[0;34m##   \e[1;33mProcesses \e[1;34m= \e[0;32m`ps -Afl | wc -l` running processes of `ulimit -u` maximum processes
 $PreHostScheme$LightBlueScheme$HostScheme$LightBlueScheme\e[1;34m$PostHostScheme$BlueScheme
-\e[0;37m
-"
+\e[0;37m"
